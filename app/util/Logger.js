@@ -1,7 +1,4 @@
 'use strict';
-// eslint-disable-next-line import/default
-import Fabric from 'react-native-fabric';
-import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 /**
@@ -18,14 +15,13 @@ export default class Logger {
 	 * @returns - void
 	 */
 	static async log(...args) {
-		// TODO use crashlytics opt-in
 		// Check if user passed accepted opt-in to metrics
 		const metricsOptIn = await AsyncStorage.getItem('@MetaMask:metricsOptIn');
 		if (__DEV__) {
 			args.unshift('[MetaMask DEBUG]:');
 			console.log.apply(null, args); // eslint-disable-line no-console
 		} else if (metricsOptIn === 'agreed') {
-			Fabric.Crashlytics.log(JSON.stringify(args));
+			console.log(args);
 		}
 	}
 
@@ -36,18 +32,13 @@ export default class Logger {
 	 * @returns - void
 	 */
 	static async error(...args) {
-		// TODO use crashlytics opt-in
 		// Check if user passed accepted opt-in to metrics
 		const metricsOptIn = await AsyncStorage.getItem('@MetaMask:metricsOptIn');
 		if (__DEV__) {
 			args.unshift('[MetaMask DEBUG]:');
 			console.warn(args); // eslint-disable-line no-console
 		} else if (metricsOptIn === 'agreed') {
-			if (Platform.OS === 'android') {
-				Fabric.Crashlytics.logException(JSON.stringify(args));
-			} else {
-				Fabric.Crashlytics.recordError(JSON.stringify(args));
-			}
+			console.log(args);
 		}
 	}
 }
