@@ -1,6 +1,7 @@
 package io.metamask;
 
 import com.facebook.react.ReactApplication;
+import io.sentry.RNSentryPackage;
 import com.sensors.RNSensorsPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
@@ -49,6 +50,7 @@ public class MainApplication extends MultiDexApplication implements ShareApplica
 		protected List<ReactPackage> getPackages() {
 		return Arrays.<ReactPackage>asList(
 				new MainReactPackage(),
+            new RNSentryPackage(),
             	new RNSensorsPackage(),
             	new ReanimatedPackage(),
 				new RNCWebViewPackage(),
